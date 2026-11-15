@@ -1,0 +1,210 @@
+{
+ "question": "מה מצב הזרם עבור מוצר 5?",
+ "route": {
+  "product_ids": [
+   5
+  ],
+  "carried_from_history": false,
+  "wants_stream": true,
+  "wants_batch": false,
+  "wants_reviews": false,
+  "wants_revenue": false,
+  "wants_review_texts": false,
+  "unsupported_metrics": []
+ },
+ "stream": {
+  "available": true,
+  "source": "SQLite stream state (StreamEngine)",
+  "units": {
+   "money": "agorot (1/100 ILS), integer",
+   "time": "UTC ISO-8601"
+  },
+  "checkpoint": 119,
+  "next_offset": 120,
+  "watermark": "2026-11-01T10:03:48.300+00:00",
+  "max_accepted_event_time": "2026-11-01T10:03:48.300+00:00",
+  "finalized": false,
+  "config": {
+   "alert_threshold": 3,
+   "grace_seconds": 10,
+   "out_of_order_seconds": 0,
+   "window_seconds": 60
+  },
+  "window_rule": "window [start, end) closes when watermark >= window_end + grace; wall clock never advances watermark",
+  "stats": {
+   "received": 120,
+   "accepted": 108,
+   "accepted_orders": 108,
+   "accepted_reviews": 0,
+   "duplicates": 6,
+   "late": 6,
+   "invalid": 0,
+   "revenue_windows_emitted": 3,
+   "review_windows_emitted": 0,
+   "alerts_emitted": 0
+  },
+  "open_order_windows": [
+   {
+    "window_start_ms": 1793527380000,
+    "orders": 24,
+    "revenue_cents": 529590,
+    "window_start": "2026-11-01T10:03:00.000+00:00",
+    "window_end": "2026-11-01T10:04:00.000+00:00"
+   }
+  ],
+  "closed_order_windows": [
+   {
+    "window_start_ms": 1793527200000,
+    "orders": 28,
+    "revenue_cents": 442150,
+    "emitted_at_watermark_ms": 1793527270750,
+    "closure_reason": "watermark",
+    "window_start": "2026-11-01T10:00:00.000+00:00",
+    "window_end": "2026-11-01T10:01:00.000+00:00"
+   },
+   {
+    "window_start_ms": 1793527260000,
+    "orders": 28,
+    "revenue_cents": 660530,
+    "emitted_at_watermark_ms": 1793527330505,
+    "closure_reason": "watermark",
+    "window_start": "2026-11-01T10:01:00.000+00:00",
+    "window_end": "2026-11-01T10:02:00.000+00:00"
+   },
+   {
+    "window_start_ms": 1793527320000,
+    "orders": 28,
+    "revenue_cents": 595920,
+    "emitted_at_watermark_ms": 1793527392854,
+    "closure_reason": "watermark",
+    "window_start": "2026-11-01T10:02:00.000+00:00",
+    "window_end": "2026-11-01T10:03:00.000+00:00"
+   }
+  ],
+  "open_review_windows": [],
+  "closed_review_windows": [],
+  "alerts": [],
+  "late_events_count": 6,
+  "late_events": [
+   {
+    "event_id": "ev-0012",
+    "source_offset": 44,
+    "kind": "order",
+    "amount_cents": 69800,
+    "event_time": "2026-11-01T10:00:24.664+00:00",
+    "window_start": "2026-11-01T10:00:00.000+00:00",
+    "watermark_at_arrival": "2026-11-01T10:01:30.106+00:00"
+   },
+   {
+    "event_id": "ev-0014",
+    "source_offset": 50,
+    "kind": "order",
+    "amount_cents": 8990,
+    "event_time": "2026-11-01T10:00:28.117+00:00",
+    "window_start": "2026-11-01T10:00:00.000+00:00",
+    "watermark_at_arrival": "2026-11-01T10:01:38.892+00:00"
+   },
+   {
+    "event_id": "ev-0055",
+    "source_offset": 75,
+    "kind": "order",
+    "amount_cents": 34900,
+    "event_time": "2026-11-01T10:01:50.440+00:00",
+    "window_start": "2026-11-01T10:01:00.000+00:00",
+    "watermark_at_arrival": "2026-11-01T10:02:32.724+00:00"
+   },
+   {
+    "event_id": "ev-0059",
+    "source_offset": 93,
+    "kind": "order",
+    "amount_cents": 22900,
+    "event_time": "2026-11-01T10:01:58.089+00:00",
+    "window_start": "2026-11-01T10:01:00.000+00:00",
+    "watermark_at_arrival": "2026-11-01T10:03:04.491+00:00"
+   },
+   {
+    "event_id": "ev-0073",
+    "source_offset": 113,
+    "kind": "order",
+    "amount_cents": 17980,
+    "event_time": "2026-11-01T10:02:26.776+00:00",
+    "window_start": "2026-11-01T10:02:00.000+00:00",
+    "watermark_at_arrival": "2026-11-01T10:03:38.425+00:00"
+   },
+   {
+    "event_id": "ev-0084",
+    "source_offset": 119,
+    "kind": "order",
+    "amount_cents": 8990,
+    "event_time": "2026-11-01T10:02:48.287+00:00",
+    "window_start": "2026-11-01T10:02:00.000+00:00",
+    "watermark_at_arrival": "2026-11-01T10:03:48.300+00:00"
+   }
+  ],
+  "late_orders_cents": 163560,
+  "dead_letters_count": 0,
+  "dead_letters_sample": [],
+  "totals": {
+   "orders_accepted": 108,
+   "revenue_cents_accepted": 2228190,
+   "revenue_ils_accepted": 22281.9,
+   "open_windows_included_in_totals": 1
+  },
+  "by_product_orders": [
+   {
+    "product_id": 5,
+    "disposition": "accepted",
+    "orders": 25,
+    "revenue_cents": 404600
+   }
+  ],
+  "event_time_range": {
+   "first_event_time": "2026-11-01T10:00:00.323833+00:00",
+   "last_event_time": "2026-11-01T10:03:48.300349+00:00"
+  },
+  "scope_notes": [
+   "open_order_windows / closed_order_windows aggregate ALL products together (the engine does not split order windows by product). They must NOT be presented as figures of a single product.",
+   "by_product_orders is the per-product view: disposition 'accepted' includes orders that sit in still-open windows; 'late' orders were rejected from windows and are shown separately.",
+   "review windows (open_review_windows / closed_review_windows) ARE per product."
+  ]
+ },
+ "source_comparison": {
+  "combined_total_allowed": false,
+  "reasons": [
+   "batch revenue = paid orders in ILS; the stream contract has no payment-status field and money is in agorot",
+   "product ids: stream uses [1, 3, 4, 5, 6] which are all present in the batch product table [1, 2, 3, 4, 5, 6, 7, 8] (ids are matchable)",
+   "order_id overlap between sources: 0 (batch range 1002-1599); no shared orders found",
+   "batch order dates 2026-01-01..2026-09-27; stream event time 2026-11-01T10:00:00.323833+00:00..2026-11-01T10:03:48.300349+00:00"
+  ],
+  "instruction": "report batch and stream metrics separately; do not add them"
+ },
+ "data_gaps": {
+  "unsupported_metrics_requested": [],
+  "available_metrics": [
+   "revenue (paid orders, ILS)",
+   "paid orders count",
+   "review count",
+   "average rating",
+   "negative reviews (<=2)",
+   "review texts",
+   "stream order counts/revenue (agorot)",
+   "stream windows, late events, alerts, checkpoint, watermark"
+  ],
+  "note": ""
+ },
+ "snapshot": {
+  "snapshot_id": "snap-20261115T185310-cp119-46ce88",
+  "taken_at_utc": "2026-11-15T18:53:10+00:00",
+  "stream_checkpoint": 119,
+  "stream_watermark": "2026-11-01T10:03:48.300+00:00",
+  "tables_used": [
+   "stream:late_events",
+   "stream:order_state",
+   "stream:realtime_revenue",
+   "stream:review_state",
+   "stream:seen_events",
+   "stream:stream_meta"
+  ],
+  "freshness_rule": "values in this package are current as of taken_at_utc; they override older numbers from chat history"
+ }
+}

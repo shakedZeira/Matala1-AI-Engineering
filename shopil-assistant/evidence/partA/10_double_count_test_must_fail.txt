@@ -1,0 +1,7 @@
+﻿=== dbt test against a BROKEN COPY whose mart uses the naive orders x reviews join (expected: FAIL)
+19:01:03  1 of 1 FAIL 9 assert_mart_reviews_no_double_count .............................. [FAIL 9 in 0.09s]
+19:01:03    Got 9 results, configured to fail if != 0
+19:01:03  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1
+=== same test against the REAL warehouse (expected: PASS)
+19:01:13  1 of 1 PASS assert_mart_reviews_no_double_count ................................ [PASS in 0.07s]
+19:01:13  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1

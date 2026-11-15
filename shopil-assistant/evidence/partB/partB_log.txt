@@ -1,0 +1,94 @@
+
+=== B1. Continuous producer + bounded asyncio.Queue + SQLite state (run_live)
+ t(s) produced consumed queue bp-waits orders    revenue closed_win
+ 1.82        2        1     1        0      1      49.90          0
+ 2.28        8        4     4        0      3     258.80          0
+ 2.83       14        7     7        0      6     747.60          0
+ 3.22       18       10     8        2      8    1325.60          0
+ 3.67       21       13     8        5      9    1375.50          0
+ 4.04       24       16     8        8     11    1953.50          0
+  4.3       27       19     8       11     13    2162.40          0
+ 4.54       30       22     8       14     15    2302.20          0
+ 4.76       33       25     8       17     17    2770.20          0
+ 4.98       36       28     8       20     18    2860.10          0
+ 5.36       39       31     8       23     21    3488.00          0
+ 5.57       42       34     8       26     23    3836.00          0
+ 5.86       44       37     7       27     25    4274.90          1
+ 6.11       44       40     4       27     25    4274.90          1
+  6.4       44       43     1       27     28    4533.70          1
+final: produced=44 consumed=44 max_queue_depth=8/8 backpressure_waits=27 elapsed=4.8357s orders=28 revenue=₪4,533.70 open_windows=1 (not finalized: True)
+[PASS] B1 produced == consumed after graceful drain 
+[PASS] B1 queue never exceeded its bound max=8 bound=8
+[PASS] B1 backpressure observed (producer had to wait on full queue) 
+[PASS] B1 processing progressed while producer still running (no waiting for all input) consumed 8 at t=2.96s vs 44 at end
+[PASS] B1 live run left windows open (timer expiry is not end-of-input) 
+[PASS] B1 checkpoint == last consumed offset 
+
+=== B2. Same input, same order, fresh DBs: run_live (per record) vs run_microbatch vs direct
+[PASS] B2 canonical_results: run_live == direct ingest 
+[PASS] B2 canonical_results: run_microbatch == run_live 
+run_live      produced=317 consumed=317
+run_microbatch produced=317 consumed=317 batches=46 flush_counts={'max_size': 45, 'max_wait': 0, 'final_drain': 1}
+batch_sizes=[7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 2]
+[PASS] B2 everything ingested was processed (clean end) 
+[PASS] B2 sum(batch_sizes) == events processed 317 == 317
+[PASS] B2 reconciliation: accepted + late == batch truth (cents) 5795430 + 328740 = 6124170
+
+=== B3. Micro-batch flush reasons: max_size, max_wait, final_drain
+a_max_size: sizes=[5, 5, 5, 5, 3] reasons=['max_size', 'max_size', 'max_size', 'max_size', 'final_drain'] waits=[0.0, 0.0, 0.0, 0.0, 0.0]
+[PASS] B3a max_size releases full batches, leftover released by final_drain {'max_size': 4, 'max_wait': 0, 'final_drain': 1}
+b_max_wait: sizes=[3, 2, 4] reasons=['max_wait', 'max_wait', 'max_wait'] waits=[0.12, 0.13, 0.13]
+[PASS] B3b max_wait releases partial batches when the timer fires first {'max_size': 0, 'max_wait': 3, 'final_drain': 0}
+c_partial_no_next_event: sizes=[1, 1, 1] reasons=['max_wait', 'max_wait', 'max_wait'] waits=[0.22, 0.21, 0.2]
+[PASS] B3c partial batch (1 of 5) released by max_wait before the next event arrived (arrival gap 1.0s) size=1 reason=max_wait waited=0.217965s
+[PASS] B3c remaining records still drained cleanly, sum(sizes)==events 
+[PASS] B3 sum(batch_sizes) == events processed in all three cases 
+[PASS] B3 final_drain does not close business windows (finalize not requested) 
+
+=== B4. Teaching fixture (17 deliveries): windows 60s, out-of-order 0, grace 10
+stats: {'received': 17, 'accepted': 12, 'accepted_orders': 7, 'accepted_reviews': 5, 'duplicates': 2, 'late': 2, 'invalid': 1, 'revenue_windows_emitted': 4, 'review_windows_emitted': 2, 'alerts_emitted': 1}
+accepted revenue=₪122.00  late=₪13.00  batch truth=₪135.00
+[PASS] B4 accepted revenue == 122.00 ILS (assignment reference) 
+[PASS] B4 late revenue == 13.00 ILS (assignment reference) 
+[PASS] B4 full calculation on valid unique orders == 135.00 ILS 122.00 + 13.00 = 135.00
+[PASS] B4 counters: 7 accepted orders, 2 late orders, 2 duplicates, 1 invalid (7, 2, 2, 1)
+[PASS] B4 hand-computed window [10:00:00,10:01:00) = order-a 1000 + order-c 1500 = 2500 cents, 2 orders engine: 2 orders 2500 cents; closed at watermark 1793527275000
+[PASS] B4 boundary case: order at exactly 10:01:00.000 is in window [10:01:00,10:02:00) (start inclusive) and arrives after that window closed -> late_events ('2026-11-01T10:01:00.000+00:00', '2026-11-01T10:02:15.000+00:00')
+[PASS] B4 late_events contains order-late (500) and order-boundary (800) 
+[PASS] B4 watermark never moves backwards 
+[PASS] B4 invalid payload kept in dead_letters with offset, input and reason amount_cents must be an integer >= 0
+[PASS] B4 invalid + duplicate + late events all advanced the checkpoint (checkpoint == last offset) 
+[PASS] B4 product 5: exactly one alert (at the 3rd negative review) ('review-3', 3)
+[PASS] B4 4th negative review raises the window counter to 4 but creates no second alert 
+[PASS] B4 independent oracle == engine (accepted/late/dup/invalid) 
+[PASS] B4 five kinds of invalid input -> five dead_letters, zero accepted, checkpoint advanced event_time must include a timezone; amount_cents must be an integer >= 0; rating must be between 1 and 5; missing required field: event_id; event must be an object
+
+=== B5. Grace policy comparison, same 300-order input, same order, fresh DBs
+[PASS] B5 grace=0: accepted+late == 300 orders and 6,124,170 cents 279+21 orders; 5691690+432480 cents
+[PASS] B5 grace=0: independent oracle matches engine 
+[PASS] B5 grace=10: accepted+late == 300 orders and 6,124,170 cents 286+14 orders; 5795430+328740 cents
+[PASS] B5 grace=10: independent oracle matches engine 
+[PASS] B5 grace=30: accepted+late == 300 orders and 6,124,170 cents 291+9 orders; 5900830+223340 cents
+[PASS] B5 grace=30: independent oracle matches engine 
+[PASS] B5 grace=120: accepted+late == 300 orders and 6,124,170 cents 300+0 orders; 6124170+0 cents
+[PASS] B5 grace=120: independent oracle matches engine 
+[PASS] B5 grace=0: matches course reference (279 accepted, 21 late, 56,916.90 ILS) 
+[PASS] B5 grace=10: matches course reference (286 accepted, 14 late, 57,954.30 ILS) 
+[PASS] B5 grace=120: matches course reference (300 accepted, 0 late, 61,241.70 ILS) 
+[PASS] B5 more grace -> never more late events (monotone) [21, 14, 9, 0]
+grace=  0s accepted=279 late= 21 accepted= 56,916.90 late= 4,324.80 closed-before-end=9
+grace= 10s accepted=286 late= 14 accepted= 57,954.30 late= 3,287.40 closed-before-end=9
+grace= 30s accepted=291 late=  9 accepted= 59,008.30 late= 2,233.40 closed-before-end=9
+grace=120s accepted=300 late=  0 accepted= 61,241.70 late=     0.00 closed-before-end=7
+
+=== B6. Duplicates, replay of saved offsets, restart, crash before/after commit
+[PASS] B6 same event_id at a new offset is a duplicate and does not increase revenue 
+[PASS] B6 replay of an already-saved offset returns 'replayed' and changes nothing 
+[PASS] B6 an offset gap is rejected instead of silently losing records 
+[PASS] B6 after reopening the engine the checkpoint and state are exactly as saved 
+[PASS] B6 replaying old offsets after reopening does not change the durable state 
+[PASS] B6 crash BEFORE commit: restart resumes from checkpoint 7 and reaches the same business result injected crash before_commit at offset 8
+[PASS] B6 crash AFTER commit: restart resumes from checkpoint 8 (offset 8 not re-applied) and same result injected crash after_commit at offset 8
+[PASS] B6 a late event does not advance or regress the watermark 
+
+TOTAL: 51/51 checks passed

@@ -1,0 +1,257 @@
+[
+ {
+  "name": "B1 produced == consumed after graceful drain",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B1 queue never exceeded its bound",
+  "passed": true,
+  "detail": "max=8 bound=8"
+ },
+ {
+  "name": "B1 backpressure observed (producer had to wait on full queue)",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B1 processing progressed while producer still running (no waiting for all input)",
+  "passed": true,
+  "detail": "consumed 8 at t=2.96s vs 44 at end"
+ },
+ {
+  "name": "B1 live run left windows open (timer expiry is not end-of-input)",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B1 checkpoint == last consumed offset",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B2 canonical_results: run_live == direct ingest",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B2 canonical_results: run_microbatch == run_live",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B2 everything ingested was processed (clean end)",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B2 sum(batch_sizes) == events processed",
+  "passed": true,
+  "detail": "317 == 317"
+ },
+ {
+  "name": "B2 reconciliation: accepted + late == batch truth (cents)",
+  "passed": true,
+  "detail": "5795430 + 328740 = 6124170"
+ },
+ {
+  "name": "B3a max_size releases full batches, leftover released by final_drain",
+  "passed": true,
+  "detail": "{'max_size': 4, 'max_wait': 0, 'final_drain': 1}"
+ },
+ {
+  "name": "B3b max_wait releases partial batches when the timer fires first",
+  "passed": true,
+  "detail": "{'max_size': 0, 'max_wait': 3, 'final_drain': 0}"
+ },
+ {
+  "name": "B3c partial batch (1 of 5) released by max_wait before the next event arrived (arrival gap 1.0s)",
+  "passed": true,
+  "detail": "size=1 reason=max_wait waited=0.217965s"
+ },
+ {
+  "name": "B3c remaining records still drained cleanly, sum(sizes)==events",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B3 sum(batch_sizes) == events processed in all three cases",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B3 final_drain does not close business windows (finalize not requested)",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B4 accepted revenue == 122.00 ILS (assignment reference)",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B4 late revenue == 13.00 ILS (assignment reference)",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B4 full calculation on valid unique orders == 135.00 ILS",
+  "passed": true,
+  "detail": "122.00 + 13.00 = 135.00"
+ },
+ {
+  "name": "B4 counters: 7 accepted orders, 2 late orders, 2 duplicates, 1 invalid",
+  "passed": true,
+  "detail": "(7, 2, 2, 1)"
+ },
+ {
+  "name": "B4 hand-computed window [10:00:00,10:01:00) = order-a 1000 + order-c 1500 = 2500 cents, 2 orders",
+  "passed": true,
+  "detail": "engine: 2 orders 2500 cents; closed at watermark 1793527275000"
+ },
+ {
+  "name": "B4 boundary case: order at exactly 10:01:00.000 is in window [10:01:00,10:02:00) (start inclusive) and arrives after that window closed -> late_events",
+  "passed": true,
+  "detail": "('2026-11-01T10:01:00.000+00:00', '2026-11-01T10:02:15.000+00:00')"
+ },
+ {
+  "name": "B4 late_events contains order-late (500) and order-boundary (800)",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B4 watermark never moves backwards",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B4 invalid payload kept in dead_letters with offset, input and reason",
+  "passed": true,
+  "detail": "amount_cents must be an integer >= 0"
+ },
+ {
+  "name": "B4 invalid + duplicate + late events all advanced the checkpoint (checkpoint == last offset)",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B4 product 5: exactly one alert (at the 3rd negative review)",
+  "passed": true,
+  "detail": "('review-3', 3)"
+ },
+ {
+  "name": "B4 4th negative review raises the window counter to 4 but creates no second alert",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B4 independent oracle == engine (accepted/late/dup/invalid)",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B4 five kinds of invalid input -> five dead_letters, zero accepted, checkpoint advanced",
+  "passed": true,
+  "detail": "event_time must include a timezone; amount_cents must be an integer >= 0; rating must be between 1 and 5; missing required field: event_id; event must be an object"
+ },
+ {
+  "name": "B5 grace=0: accepted+late == 300 orders and 6,124,170 cents",
+  "passed": true,
+  "detail": "279+21 orders; 5691690+432480 cents"
+ },
+ {
+  "name": "B5 grace=0: independent oracle matches engine",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B5 grace=10: accepted+late == 300 orders and 6,124,170 cents",
+  "passed": true,
+  "detail": "286+14 orders; 5795430+328740 cents"
+ },
+ {
+  "name": "B5 grace=10: independent oracle matches engine",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B5 grace=30: accepted+late == 300 orders and 6,124,170 cents",
+  "passed": true,
+  "detail": "291+9 orders; 5900830+223340 cents"
+ },
+ {
+  "name": "B5 grace=30: independent oracle matches engine",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B5 grace=120: accepted+late == 300 orders and 6,124,170 cents",
+  "passed": true,
+  "detail": "300+0 orders; 6124170+0 cents"
+ },
+ {
+  "name": "B5 grace=120: independent oracle matches engine",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B5 grace=0: matches course reference (279 accepted, 21 late, 56,916.90 ILS)",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B5 grace=10: matches course reference (286 accepted, 14 late, 57,954.30 ILS)",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B5 grace=120: matches course reference (300 accepted, 0 late, 61,241.70 ILS)",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B5 more grace -> never more late events (monotone)",
+  "passed": true,
+  "detail": "[21, 14, 9, 0]"
+ },
+ {
+  "name": "B6 same event_id at a new offset is a duplicate and does not increase revenue",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B6 replay of an already-saved offset returns 'replayed' and changes nothing",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B6 an offset gap is rejected instead of silently losing records",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B6 after reopening the engine the checkpoint and state are exactly as saved",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B6 replaying old offsets after reopening does not change the durable state",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "B6 crash BEFORE commit: restart resumes from checkpoint 7 and reaches the same business result",
+  "passed": true,
+  "detail": "injected crash before_commit at offset 8"
+ },
+ {
+  "name": "B6 crash AFTER commit: restart resumes from checkpoint 8 (offset 8 not re-applied) and same result",
+  "passed": true,
+  "detail": "injected crash after_commit at offset 8"
+ },
+ {
+  "name": "B6 a late event does not advance or regress the watermark",
+  "passed": true,
+  "detail": ""
+ }
+]

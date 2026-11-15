@@ -1,0 +1,158 @@
+[
+ {
+  "name": "M1a injected event was accepted as valid+unique after the snapshot",
+  "passed": true,
+  "detail": "accepted",
+  "mock": true
+ },
+ {
+  "name": "M1a Actor and Critic (draft + evaluation) saw ONE identical evidence package",
+  "passed": true,
+  "detail": "sha=42682dca74f17228",
+  "mock": true
+ },
+ {
+  "name": "M1a first answer's snapshot is still the OLD state (checkpoint 119)",
+  "passed": true,
+  "detail": "",
+  "mock": true
+ },
+ {
+  "name": "M1a the NEXT question gets a NEW snapshot with the newer checkpoint",
+  "passed": true,
+  "detail": "",
+  "mock": true
+ },
+ {
+  "name": "M1a open-window counter increased by exactly 1 order / 7000 agorot in the new snapshot",
+  "passed": true,
+  "detail": "24->25 orders, window 2026-11-01T10:03:00.000+00:00 still open",
+  "mock": true
+ },
+ {
+  "name": "M1b injected event was accepted as valid+unique after the snapshot",
+  "passed": true,
+  "detail": "accepted",
+  "mock": true
+ },
+ {
+  "name": "M1b Actor and Critic (draft + evaluation) saw ONE identical evidence package",
+  "passed": true,
+  "detail": "sha=8e5f6131657478d4",
+  "mock": true
+ },
+ {
+  "name": "M1b first answer's snapshot is still the OLD state (checkpoint 119)",
+  "passed": true,
+  "detail": "",
+  "mock": true
+ },
+ {
+  "name": "M1b the NEXT question gets a NEW snapshot with the newer checkpoint",
+  "passed": true,
+  "detail": "",
+  "mock": true
+ },
+ {
+  "name": "M1b the new snapshot shows windows closed by the advanced watermark (policy: watermark >= end + grace)",
+  "passed": true,
+  "detail": "closed 3->4; watermark 2026-11-01T10:03:48.300+00:00 -> 2026-11-01T10:07:08.300+00:00",
+  "mock": true
+ },
+ {
+  "name": "M1c injected event was accepted as valid+unique after the snapshot",
+  "passed": true,
+  "detail": "accepted",
+  "mock": true
+ },
+ {
+  "name": "M1c Actor and Critic (draft + evaluation) saw ONE identical evidence package",
+  "passed": true,
+  "detail": "sha=e2ff8d80fdfaeb92",
+  "mock": true
+ },
+ {
+  "name": "M1c first answer's snapshot is still the OLD state (checkpoint 1)",
+  "passed": true,
+  "detail": "",
+  "mock": true
+ },
+ {
+  "name": "M1c the NEXT question gets a NEW snapshot with the newer checkpoint",
+  "passed": true,
+  "detail": "",
+  "mock": true
+ },
+ {
+  "name": "M1c the new snapshot contains the alert; the old snapshot did not",
+  "passed": true,
+  "detail": "",
+  "mock": true
+ },
+ {
+  "name": "M2 exactly 3 attempts then status rejected_max_attempts",
+  "passed": true,
+  "detail": "",
+  "mock": true
+ },
+ {
+  "name": "M2 the chat shows the 'no approved answer' message and no rejected draft",
+  "passed": true,
+  "detail": "",
+  "mock": true
+ },
+ {
+  "name": "M2 all 3 rejected drafts + feedback are in the separate audit log",
+  "passed": true,
+  "detail": "",
+  "mock": true
+ },
+ {
+  "name": "M2 the same evidence sha was used for every attempt (3 drafts + 3 evaluations = 6 calls)",
+  "passed": true,
+  "detail": "calls=6",
+  "mock": true
+ },
+ {
+  "name": "M3 critic output 'not-json' -> status error_invalid_evaluation, no answer shown as approved",
+  "passed": true,
+  "detail": "no JSON object in critic output",
+  "mock": true
+ },
+ {
+  "name": "M3 critic output 'wrong-type' -> status error_invalid_evaluation, no answer shown as approved",
+  "passed": true,
+  "detail": "critic output is not a valid Evaluation: Input should be a valid boolean",
+  "mock": true
+ },
+ {
+  "name": "M3 critic output 'missing-field' -> status error_invalid_evaluation, no answer shown as approved",
+  "passed": true,
+  "detail": "critic output is not a valid Evaluation: Field required",
+  "mock": true
+ },
+ {
+  "name": "M3 actor model failure -> status error_llm",
+  "passed": true,
+  "detail": "actor: simulated outage",
+  "mock": true
+ },
+ {
+  "name": "M3 critic model failure -> status error_llm",
+  "passed": true,
+  "detail": "critic: simulated outage",
+  "mock": true
+ },
+ {
+  "name": "M4 second attempt approved; final answer is the corrected draft",
+  "passed": true,
+  "detail": "",
+  "mock": true
+ },
+ {
+  "name": "M4 the chat shows the approved answer with source footer incl. snapshot id and checkpoint",
+  "passed": true,
+  "detail": "",
+  "mock": true
+ }
+]

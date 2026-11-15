@@ -1,0 +1,4 @@
+﻿stage,crashed,checkpoint_at_restart,revenue_cents,late,equals_baseline
+baseline,,16,12200,2,True
+before_commit,injected crash before_commit at offset 8,7,12200,2,True
+after_commit,injected crash after_commit at offset 8,8,12200,2,True

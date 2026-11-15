@@ -1,0 +1,1 @@
+﻿Drop these 5 files into a clone of https://github.com/paulavrahami/etl-course-demo (commit 6788526695bbb20ac40f46a947413fff3545b86a) at the same relative paths. They are the completed exercise files (+1 added dbt test).

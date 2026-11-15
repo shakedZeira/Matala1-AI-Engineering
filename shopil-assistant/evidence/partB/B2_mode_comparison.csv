@@ -1,0 +1,4 @@
+﻿mode,produced,consumed,batches,accepted,late,duplicates,revenue_cents,late_cents
+direct,317,317,,286,14,17,5795430,328740
+run_live,317,317,,286,14,17,5795430,328740
+"run_microbatch(7, 0.05s)",317,317,46,286,14,17,5795430,328740

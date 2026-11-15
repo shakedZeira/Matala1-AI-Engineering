@@ -1,0 +1,18 @@
+﻿offset,event_id,kind,t_plus_s,cents,decision,watermark,note
+0,order-a,order,5,1000,accepted,1793527205000,
+1,review-1,review,10,,accepted,1793527210000,
+2,order-b,order,65,2000,accepted,1793527265000,
+3,order-c,order,20,1500,accepted,1793527265000,
+4,review-2,review,12,,accepted,1793527265000,
+5,order-a,order,5,1000,duplicate,,
+6,review-3,review,15,,accepted,1793527265000,
+7,review-4,review,18,,accepted,1793527265000,
+8,order-d,order,75,3000,accepted,1793527275000,
+9,order-late,order,25,500,late,1793527275000,
+10,order-e,order,125,2500,accepted,1793527325000,
+11,bad-money,order,130,19.9,invalid,,amount_cents must be an integer >= 0
+12,order-f,order,135,1000,accepted,1793527335000,
+13,review-5,review,125,,accepted,1793527335000,
+14,order-late,order,25,500,duplicate,,
+15,order-boundary,order,60,800,late,1793527335000,
+16,order-h,order,195,1200,accepted,1793527395000,

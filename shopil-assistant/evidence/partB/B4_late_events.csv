@@ -1,0 +1,3 @@
+﻿event_id,offset,window,cents,watermark,reason
+order-late,9,2026-11-01T10:00:00.000+00:00,500,2026-11-01T10:01:15.000+00:00,watermark >= window_end + grace
+order-boundary,15,2026-11-01T10:01:00.000+00:00,800,2026-11-01T10:02:15.000+00:00,watermark >= window_end + grace

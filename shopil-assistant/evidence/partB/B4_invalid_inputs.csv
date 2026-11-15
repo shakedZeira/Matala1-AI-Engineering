@@ -1,0 +1,6 @@
+﻿offset,payload,reason
+0,"{""amount_cents"": 100, ""event_id"": ""x1"", ""event_time"": ""2026-11-01T10:00:00"", ""kind"": ""order"", ""product_id"": 1}",event_time must include a timezone
+1,"{""amount_cents"": ""5"", ""event_id"": ""x2"", ""event_time"": ""2026-11-01T10:00:00Z"", ""kind"": ""order"", ""product_id"": 1}",amount_cents must be an integer >= 0
+2,"{""event_id"": ""x3"", ""event_time"": ""2026-11-01T10:00:00Z"", ""kind"": ""review"", ""product_id"": 1, ""rating"": 7, ""text"": ""a""}",rating must be between 1 and 5
+3,"{""amount_cents"": 1, ""event_time"": ""2026-11-01T10:00:00Z"", ""kind"": ""order"", ""product_id"": 1}",missing required field: event_id
+4,"""not-an-object""",event must be an object

@@ -1,0 +1,7 @@
+﻿metric,stream,batch
+orders accepted into windows,7,
+orders late,2,
+revenue accepted (ILS),122.0,
+revenue late (ILS),13.0,
+accepted + late (ILS),135.0,135.0
+valid unique orders (count),9,9

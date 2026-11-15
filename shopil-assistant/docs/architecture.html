@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8"><title>ShopIL architecture</title>
+<style>
+  body{margin:0;background:#fff;font-family:"Segoe UI",Arial,sans-serif;color:#1b2a3a}
+  .wrap{width:1560px;padding:20px 24px;box-sizing:border-box}
+  h1{font-size:22px;margin:0 0 4px} .sub{font-size:13px;color:#566;margin-bottom:12px}
+  .lane{border:2px solid #9bb;border-radius:12px;padding:10px 12px;margin-bottom:12px;position:relative}
+  .lane>.t{position:absolute;top:-11px;right:16px;background:#fff;padding:0 8px;font-weight:700;font-size:14px}
+  .row{display:flex;align-items:stretch;gap:0;direction:rtl}
+  .box{border:1.5px solid #2c6e8f;background:#eaf4f9;border-radius:8px;padding:7px 9px;font-size:12.5px;line-height:1.35;direction:rtl;text-align:center;flex:1}
+  .box b{display:block;font-size:13px;color:#0d4a66}
+  .box.db{background:#fdf3d8;border-color:#b8860b} .box.db b{color:#7a5600}
+  .box.llm{background:#f1e8fb;border-color:#6b3fa0} .box.llm b{color:#47227a}
+  .box.ev{background:#e6f6e6;border-color:#2e8b2e} .box.ev b{color:#176317}
+  .ar{display:flex;align-items:center;justify-content:center;width:30px;font-size:20px;color:#456;direction:ltr}
+  .tx{border:2.5px dashed #c0392b;border-radius:10px;padding:8px 10px;margin:0 2px;position:relative;background:#fff8f7}
+  .tx>.t{position:absolute;top:-11px;left:12px;background:#fff;padding:0 6px;font-size:12px;font-weight:700;color:#c0392b}
+  .note{font-size:12px;color:#334;margin-top:6px;line-height:1.4}
+  .tag{display:inline-block;background:#c0392b;color:#fff;border-radius:10px;padding:1px 8px;font-size:11px;margin-inline-start:4px}
+  .tag.g{background:#2e8b2e} .tag.b{background:#2c6e8f}
+  code{direction:ltr;unicode-bidi:embed;font-family:Consolas,monospace;font-size:12px}
+</style></head><body><div class="wrap">
+<h1>ShopIL: ארכיטקטורת המימוש</h1>
+<div class="sub">מקורות הנתונים ← יעדים ← שכבת הראיות ← קשת המשוב (יוצר ומעריך). <span class="tag">גבול טרנזקציה</span> <span class="tag g">צילום מצב</span> <span class="tag b">checkpoint</span></div>
+
+<div class="lane"><div class="t">Batch: נתוני עבר (נטען פעם אחת לפני השיחה)</div>
+<div class="row">
+  <div class="box"><b>מקורות</b>customers.csv · orders.csv · products.csv<br>reviews.json (310 ביקורות)</div><div class="ar">←</div>
+  <div class="box"><b>dlt</b>orders: merge לפי order_id + updated_at<br>reviews: replace (צילום מלא)<br>customers/products: replace</div><div class="ar">←</div>
+  <div class="box db"><b>DuckDB: raw</b>orders 600 · reviews 310<br>reviews__tags 284</div><div class="ar">←</div>
+  <div class="box"><b>dbt staging</b>stg_orders · stg_reviews (289)<br>סינון דירוג/טקסט + דה-דופליקציה</div><div class="ar">←</div>
+  <div class="box db"><b>dbt marts + בדיקות</b>fct_orders 549 · mart_product_reviews (8)<br>בדיקת אי-הכפלת הכנסה (נשלפת מהמארט)</div>
+</div></div>
+
+<div class="lane"><div class="t">Streaming: קליטה רציפה (רצה גם בזמן השיחה)</div>
+<div class="row">
+  <div class="box"><b>יצרן מתמשך</b>asyncio task<br>run_live / run_microbatch</div><div class="ar">←</div>
+  <div class="box"><b>asyncio.Queue מוגבל</b>maxsize=8<br>backpressure כשהתור מלא</div><div class="ar">←</div>
+  <div class="tx" style="flex:3.1"><div class="t">טרנזקציית SQLite אחת לכל אירוע (גבול ה-commit)</div>
+    <div class="row">
+      <div class="box"><b>אימות + StreamEngine.ingest</b>חוזה אירוע · כפילויות לפי event_id<br>watermark = max(prev, max_time − ooo)<br>סגירה: watermark ≥ end + grace</div><div class="ar">←</div>
+      <div class="box db"><b>SQLite (WAL, synchronous=FULL)</b><span class="tag b">checkpoint</span> ב-stream_meta<br>מונים · חלונות פתוחים/סגורים · התראות<br>late_events · dead_letters · seen_events</div>
+    </div></div>
+</div></div>
+
+<div class="lane"><div class="t">שכבת ראיות: נוצרת מחדש לכל שאלה</div>
+<div class="row">
+  <div class="box ev"><b>retrieval.py: שאילתות מוגדרות</b>Batch: DuckDB לקריאה בלבד<br>זרם: קריאה אחת בטרנזקציית קריאה (WAL)<br><span class="tag g">צילום מצב נוצר כאן</span></div><div class="ar">←</div>
+  <div class="box ev"><b>חבילת ראיות (JSON קפוא, sha256)</b>שאלה · שורות · טבלאות · מזהים · יחידות · טווחי זמן<br>checkpoint · watermark · מצב חלונות<br>source_comparison: Batch ≠ זרם, אין סכום משולב</div>
+</div></div>
+
+<div class="lane"><div class="t">צ'אט Gradio: יוצר ← מעריך ← תיקון (עד 3 ניסיונות)</div>
+<div class="row">
+  <div class="box">משתמש<br>שאלה בעברית</div><div class="ar">←</div>
+  <div class="box llm"><b>יוצר (Actor)</b>טיוטה לפי actor_he.txt<br>אותה חבילת ראיות בכל ניסיון</div><div class="ar">⇄</div>
+  <div class="box llm"><b>מעריך (Critic)</b>Pydantic Evaluation<br>is_acceptable · feedback</div><div class="ar">←</div>
+  <div class="box"><b>מאושר</b>תשובה + מקור + מועד צילום המצב<br>נשמרת בהיסטוריה</div><div class="ar">·</div>
+  <div class="box"><b>יומן ביקורת (audit.jsonl)</b>כל טיוטה, החלטה, משוב ומצב סיום<br>טיוטות שנדחו רק כאן</div>
+</div>
+<div class="note">נדחה ← היוצר מקבל (טיוטה + משוב + אותה חבילה). אחרי 3 דחיות: "לא התקבלה תשובה מאושרת". שגיאת מודל או פלט מעריך לא תקין: מצב שגיאה מתועד. מודל: OpenRouter (nemotron, חינמי).</div>
+</div>
+
+<div class="note"><b>איפה נשמר ה-checkpoint:</b> בטבלת <code>stream_meta</code> ב-SQLite של הזרם, באותה טרנזקציה עם המונים והחלונות.
+<b>גבול הטרנזקציה:</b> אירוע אחד = commit אחד (גם אירוע פסול/כפול/מאוחר מקדם את ה-checkpoint). שמירה מקומית אינה מוכיחה exactly-once מול מערכת חיצונית.
+<b>צילום המצב לשאלה:</b> נוצר בתחילת הטיפול בכל שאלה ב-<code>build_evidence</code>; שאלה חדשה = צילום חדש.</div>
+</div></body></html>

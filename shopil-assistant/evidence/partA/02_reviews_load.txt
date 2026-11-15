@@ -1,0 +1,8 @@
+﻿Pipeline shop_il_reviews load step finished in 1.18 seconds
+1 load package(s) were loaded to destination duckdb and into dataset raw
+The duckdb destination used duckdb:///D%3A%5C%D7%9C%D7%99%D7%9E%D7%95%D7%93%D7%99%D7%9D%5C%D7%94%D7%A0%D7%93%D7%A1%D7%AA AI%5C%D7%A4%D7%A8%D7%95%D7%99%D7%A7%D7%98%5Cetl-course-demo%5Cwarehouse.duckdb location to store data
+Load package 1794767897.6946015 is LOADED and contains no failed jobs
+
+review tables in raw:
+  reviews                 310 rows
+  reviews__tags           284 rows

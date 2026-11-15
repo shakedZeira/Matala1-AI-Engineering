@@ -1,0 +1,5 @@
+﻿grace_s,accepted_orders,late_orders,accepted_ils,late_ils,windows_closed_by_watermark_before_end,total_ils,oracle_match
+0,279,21,56916.9,4324.8,9,61241.7,True
+10,286,14,57954.3,3287.4,9,61241.7,True
+30,291,9,59008.3,2233.4,9,61241.7,True
+120,300,0,61241.7,0.0,7,61241.7,True

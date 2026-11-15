@@ -1,0 +1,122 @@
+[
+ {
+  "name": "מה ההכנסות, מספר הביקו... batch revenue = 8925.0",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "מה ההכנסות, מספר הביקו... avg rating = 3.52",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "מה ההכנסות, מספר הביקו... stream accepted orders = 55",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "מה ההכנסות, מספר הביקו... stream accepted agorot = 821100",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "מה ההכנסות, מספר הביקו... stream late orders = 3",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "מה ההכנסות, מספר הביקו... review count = 42",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "מה ההכנסות, מספר הביקו... any 'paid orders' count the answer states equals 56",
+  "passed": true,
+  "detail": "stated=[]"
+ },
+ {
+  "name": "מה ההכנסות, מספר הביקו... no combined batch+stream total",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "מה ההכנסות, מספר הביקו... no hallucinated 18,925",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "R2 negative reviews == 8",
+  "passed": true,
+  "detail": "expected 8"
+ },
+ {
+  "name": "R3 states profit is missing",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "R3 contains no invented profit number",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "R3 reported available product-3 revenue is correct",
+  "passed": true,
+  "detail": "expected (42, 5214.2)"
+ },
+ {
+  "name": "מה ההכנסות והדירוג של ... batch revenue = 8925.0",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "מה ההכנסות והדירוג של ... avg rating = 3.52",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "מה ההכנסות והדירוג של ... stream accepted orders = 55",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "מה ההכנסות והדירוג של ... stream accepted agorot = 821100",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "מה ההכנסות והדירוג של ... stream late orders = 3",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "מה ההכנסות והדירוג של ... any 'paid orders' count the answer states equals 56",
+  "passed": true,
+  "detail": "stated=[56]"
+ },
+ {
+  "name": "מה ההכנסות והדירוג של ... no combined batch+stream total",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "מה ההכנסות והדירוג של ... no hallucinated 18,925",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "injected flawed draft rejected by the real critic",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "critic feedback names the correct batch revenue (8,925) and avg rating (3.52)",
+  "passed": true,
+  "detail": "התשובה מכילה מספר שגיאות מהותיות מול חבילת הראיות: 1. הכנסות Batch: המוצר 5 מראה revenue_ils = 8,925"
+ },
+ {
+  "name": "all attempts of that question used one evidence package",
+  "passed": true,
+  "detail": "{'1e1b7b882418a7c4'}"
+ }
+]

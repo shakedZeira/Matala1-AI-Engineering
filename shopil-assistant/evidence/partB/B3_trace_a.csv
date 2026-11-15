@@ -1,0 +1,6 @@
+﻿index,size,flush_reason,collection_wait_s,processing_s,first_offset,last_offset
+1,5,max_size,5.8e-05,0.234037,0,4
+2,5,max_size,0.000103,0.283886,5,9
+3,5,max_size,4.2e-05,0.223903,10,14
+4,5,max_size,0.000157,0.217156,15,19
+5,3,final_drain,5.1e-05,0.158726,20,22

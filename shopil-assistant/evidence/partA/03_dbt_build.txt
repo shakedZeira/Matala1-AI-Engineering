@@ -1,0 +1,87 @@
+﻿18:59:55  Running with dbt=1.12.6
+18:59:55  Registered adapter: duckdb=1.11.1
+18:59:58  Found 8 models, 27 data tests, 5 sources, 512 macros
+18:59:58  
+18:59:58  Concurrency: 4 threads (target='dev')
+18:59:58  
+19:00:03  2 of 35 START sql view model staging.stg_orders ................................ [RUN]
+19:00:03  1 of 35 START sql view model staging.stg_customers ............................. [RUN]
+19:00:03  4 of 35 START sql view model staging.stg_reviews ............................... [RUN]
+19:00:03  3 of 35 START sql view model staging.stg_products .............................. [RUN]
+19:00:03  2 of 35 OK created sql view model staging.stg_orders ........................... [OK in 0.32s]
+19:00:03  5 of 35 START test accepted_values_stg_orders_status__paid__refunded__pending__cancelled  [RUN]
+19:00:03  3 of 35 OK created sql view model staging.stg_products ......................... [OK in 0.36s]
+19:00:03  6 of 35 START test not_null_stg_orders_order_id ................................ [RUN]
+19:00:03  4 of 35 OK created sql view model staging.stg_reviews .......................... [OK in 0.38s]
+19:00:03  7 of 35 START test unique_stg_orders_order_id .................................. [RUN]
+19:00:03  1 of 35 OK created sql view model staging.stg_customers ........................ [OK in 0.41s]
+19:00:03  8 of 35 START test not_null_stg_products_product_id ............................ [RUN]
+19:00:03  5 of 35 PASS accepted_values_stg_orders_status__paid__refunded__pending__cancelled  [PASS in 0.18s]
+19:00:03  9 of 35 START test unique_stg_products_product_id .............................. [RUN]
+19:00:03  6 of 35 PASS not_null_stg_orders_order_id ...................................... [PASS in 0.15s]
+19:00:03  10 of 35 START test accepted_values_stg_reviews_rating__False__1__2__3__4__5 ... [RUN]
+19:00:03  7 of 35 PASS unique_stg_orders_order_id ........................................ [PASS in 0.14s]
+19:00:03  11 of 35 START test not_null_stg_reviews_review_id ............................. [RUN]
+19:00:03  8 of 35 PASS not_null_stg_products_product_id .................................. [PASS in 0.11s]
+19:00:03  12 of 35 START test relationships_stg_reviews_product_id__product_id__ref_stg_products_  [RUN]
+19:00:03  9 of 35 PASS unique_stg_products_product_id .................................... [PASS in 0.09s]
+19:00:03  10 of 35 PASS accepted_values_stg_reviews_rating__False__1__2__3__4__5 ......... [PASS in 0.08s]
+19:00:03  13 of 35 START test unique_stg_reviews_review_id ............................... [RUN]
+19:00:03  11 of 35 PASS not_null_stg_reviews_review_id ................................... [PASS in 0.07s]
+19:00:03  14 of 35 START test not_null_stg_customers_customer_id ......................... [RUN]
+19:00:04  15 of 35 START test not_null_stg_customers_email ............................... [RUN]
+19:00:04  12 of 35 PASS relationships_stg_reviews_product_id__product_id__ref_stg_products_  [PASS in 0.08s]
+19:00:04  16 of 35 START test relationships_stg_orders_customer_id__customer_id__ref_stg_customers_  [RUN]
+19:00:04  13 of 35 PASS unique_stg_reviews_review_id ..................................... [PASS in 0.09s]
+19:00:04  14 of 35 PASS not_null_stg_customers_customer_id ............................... [PASS in 0.07s]
+19:00:04  17 of 35 START test unique_stg_customers_customer_id ........................... [RUN]
+19:00:04  15 of 35 PASS not_null_stg_customers_email ..................................... [PASS in 0.07s]
+19:00:04  18 of 35 START test unique_stg_customers_email ................................. [RUN]
+19:00:04  16 of 35 WARN 19 relationships_stg_orders_customer_id__customer_id__ref_stg_customers_  [WARN 19 in 0.07s]
+19:00:04  17 of 35 PASS unique_stg_customers_customer_id ................................. [PASS in 0.05s]
+19:00:04  18 of 35 PASS unique_stg_customers_email ....................................... [PASS in 0.04s]
+19:00:04  19 of 35 START sql table model marts.fct_orders ................................ [RUN]
+19:00:04  19 of 35 OK created sql table model marts.fct_orders ........................... [OK in 0.17s]
+19:00:04  20 of 35 START test not_null_fct_orders_amount ................................. [RUN]
+19:00:04  22 of 35 START test unique_fct_orders_order_id ................................. [RUN]
+19:00:04  21 of 35 START test not_null_fct_orders_order_id ............................... [RUN]
+19:00:04  20 of 35 PASS not_null_fct_orders_amount ....................................... [PASS in 0.08s]
+19:00:04  21 of 35 PASS not_null_fct_orders_order_id ..................................... [PASS in 0.08s]
+19:00:04  22 of 35 PASS unique_fct_orders_order_id ....................................... [PASS in 0.08s]
+19:00:04  24 of 35 START sql table model marts.mart_daily_revenue ........................ [RUN]
+19:00:04  25 of 35 START sql table model marts.mart_product_reviews ...................... [RUN]
+19:00:04  23 of 35 START sql table model marts.dim_customers ............................. [RUN]
+19:00:04  24 of 35 OK created sql table model marts.mart_daily_revenue ................... [OK in 0.19s]
+19:00:04  26 of 35 START test assert_no_negative_revenue ................................. [RUN]
+19:00:04  27 of 35 START test not_null_mart_daily_revenue_order_date ..................... [RUN]
+19:00:04  25 of 35 OK created sql table model marts.mart_product_reviews ................. [OK in 0.21s]
+19:00:04  28 of 35 START test unique_mart_daily_revenue_order_date ....................... [RUN]
+19:00:04  23 of 35 OK created sql table model marts.dim_customers ........................ [OK in 0.24s]
+19:00:04  27 of 35 PASS not_null_mart_daily_revenue_order_date ........................... [PASS in 0.07s]
+19:00:04  28 of 35 PASS unique_mart_daily_revenue_order_date ............................. [PASS in 0.03s]
+19:00:04  29 of 35 START test assert_mart_reviews_no_double_count ........................ [RUN]
+19:00:04  26 of 35 PASS assert_no_negative_revenue ....................................... [PASS in 0.07s]
+19:00:04  30 of 35 START test not_null_mart_product_reviews_product_id ................... [RUN]
+19:00:04  31 of 35 START test not_null_mart_product_reviews_revenue ...................... [RUN]
+19:00:04  32 of 35 START test not_null_mart_product_reviews_review_count ................. [RUN]
+19:00:04  30 of 35 PASS not_null_mart_product_reviews_product_id ......................... [PASS in 0.07s]
+19:00:04  33 of 35 START test unique_mart_product_reviews_product_id ..................... [RUN]
+19:00:04  31 of 35 PASS not_null_mart_product_reviews_revenue ............................ [PASS in 0.08s]
+19:00:04  34 of 35 START test not_null_dim_customers_customer_id ......................... [RUN]
+19:00:04  32 of 35 PASS not_null_mart_product_reviews_review_count ....................... [PASS in 0.07s]
+19:00:04  35 of 35 START test unique_dim_customers_customer_id ........................... [RUN]
+19:00:04  29 of 35 PASS assert_mart_reviews_no_double_count .............................. [PASS in 0.11s]
+19:00:04  34 of 35 PASS not_null_dim_customers_customer_id ............................... [PASS in 0.05s]
+19:00:04  35 of 35 PASS unique_dim_customers_customer_id ................................. [PASS in 0.04s]
+19:00:04  33 of 35 PASS unique_mart_product_reviews_product_id ........................... [PASS in 0.07s]
+19:00:04  
+19:00:04  Finished running 4 table models, 27 data tests, 4 view models in 0 hours 0 minutes and 6.22 seconds (6.22s).
+19:00:04  
+19:00:04  Completed with 1 warning:
+19:00:04  
+19:00:04  [WARNING]: in test relationships_stg_orders_customer_id__customer_id__ref_stg_customers_ (models\staging\_staging.yml)
+19:00:04  [WARNING]: Got 19 results, configured to warn if != 0
+19:00:04  
+19:00:04    compiled code at target\compiled\shop_il\models\staging\_staging.yml\relationships_stg_orders_96411fe0c89b49c3f4da955dfd358ba0.sql
+19:00:04  
+19:00:04  Done. PASS=34 WARN=1 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=35

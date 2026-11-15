@@ -1,0 +1,57 @@
+[
+ {
+  "name": "R1 approved with real models",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "R1 manual verification: answer contains the independently computed numbers",
+  "passed": false,
+  "detail": "{\"8925.00\": false, \"42\": true, \"3.52\": true, \"55\": true, \"821100\": true, \"3\": true}"
+ },
+ {
+  "name": "R1 batch and stream are not added together (no combined total of 8925 + 8211)",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "R2 follow-up resolved to product 5 from history",
+  "passed": true,
+  "detail": "route product_ids=[5]"
+ },
+ {
+  "name": "R2 approved with real models",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "R2 manual verification: 8 negative reviews (<=2) of 42",
+  "passed": false,
+  "detail": ""
+ },
+ {
+  "name": "R3 approved with real models",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "R3 answer says the metric is missing (no invented profit figure)",
+  "passed": true,
+  "detail": "**Batch (מחסן DuckDB – marts.fct_orders, marts.mart_product_reviews)**   - למוצר 3 (\"בקבוק מים תרמי\") זמינים הנתונים הבאים נכון ל‑snapshot מ"
+ },
+ {
+  "name": "R4 first (injected, flawed) draft was REJECTED by the real critic with concrete feedback",
+  "passed": true,
+  "detail": "התשובה מכילה מספר שגיאות מהותיות מול חבילת הראיות:\n1. הכנסות Batch: המוצר 5 מראה revenue_ils = 8,925 ש\"ח (לא 18,925).\n2. הכנסות זרם: עבור מוצר 5 יש שני סוגי הכנ"
+ },
+ {
+  "name": "R4 real actor produced a corrected version and the real critic approved it",
+  "passed": true,
+  "detail": ""
+ },
+ {
+  "name": "R4 manual verification: the approved answer has the correct batch revenue and avg rating (not 18,925 / 0 / combined 27,136)",
+  "passed": false,
+  "detail": "{\"8925.00\": false, \"3.52\": true}"
+ }
+]

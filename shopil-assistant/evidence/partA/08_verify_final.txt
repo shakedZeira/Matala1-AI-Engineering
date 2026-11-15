@@ -1,0 +1,34 @@
+﻿== Orders (assignment reference values)
+[PASS] raw.orders rows: got=600 expected=600
+[PASS] staging.stg_orders rows: got=600 expected=600
+[PASS] marts.fct_orders rows: got=549 expected=549
+[PASS] paid orders: got=402 expected=402
+[PASS] paid revenue (ILS): got=97210.1 expected=97210.1
+== Reviews: counts after each rule
+[PASS] raw: got=310 expected=310
+[PASS] after rating rule: got=304 expected=304
+[PASS] after text rule: got=298 expected=298
+[PASS] after duplicate rule (stg_reviews): got=289 expected=289
+== Reviews: surviving identifiers (independent recomputation from reviews.json)
+[PASS] surviving review_id set equals expected: got=True expected=True
+[PASS] count of surviving ids: got=289 expected=289
+[PASS] kept row is the earliest valid created_at: got=True expected=True
+== Mart: one row per product
+[PASS] mart rows: got=8 expected=8
+[PASS] distinct product_id: got=8 expected=8
+[PASS] sum of mart revenue == paid fct revenue: got=97210.1 expected=97210.1
+[PASS] sum of mart paid_orders: got=402 expected=402
+[PASS] sum of mart review_count: got=289 expected=289
+
+product_id | name | reviews | avg | negative | paid_orders | revenue
+1 | אוזניות אלחוטיות | 29 | 3.69 | 6 | 44 | 19544.00
+2 | מקלדת מכנית | 36 | 3.78 | 6 | 51 | 26622.00
+3 | בקבוק מים תרמי | 39 | 3.95 | 7 | 42 | 5214.20
+4 | תיק גב למחשב | 33 | 3.7 | 7 | 54 | 16717.00
+5 | מטען מהיר USB-C | 42 | 3.52 | 8 | 56 | 8925.00
+6 | ספל קרמיקה | 41 | 3.71 | 9 | 56 | 3542.90
+7 | עכבר ארגונומי | 32 | 3.81 | 6 | 47 | 12338.00
+8 | מעמד לטלפון | 37 | 3.38 | 7 | 52 | 4307.00
+products with zero reviews: 0
+
+OVERALL: ALL PASS

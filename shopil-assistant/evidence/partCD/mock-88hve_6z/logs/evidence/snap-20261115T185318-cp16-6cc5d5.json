@@ -1,0 +1,154 @@
+{
+ "question": "שאלה",
+ "route": {
+  "product_ids": [],
+  "carried_from_history": false,
+  "wants_stream": false,
+  "wants_batch": true,
+  "wants_reviews": false,
+  "wants_revenue": false,
+  "wants_review_texts": false,
+  "unsupported_metrics": []
+ },
+ "batch": {
+  "source": "DuckDB warehouse (dlt load + dbt marts)",
+  "refreshed": "loaded once before the conversation",
+  "units": {
+   "money": "ILS (shekels)",
+   "rating": "1-5 stars",
+   "dates": "calendar dates / timestamps as loaded"
+  },
+  "revenue_definition": "paid orders only (status = 'paid'); amount already includes quantity",
+  "negative_review_definition": "rating <= 2",
+  "null_semantics": "avg_rating is null (missing, NOT zero) for a product with no reviews; review_count 0 means none",
+  "totals": {
+   "paid_orders": 402,
+   "revenue_ils": 97210.1,
+   "first_order_date": "2026-01-01",
+   "last_order_date": "2026-09-27",
+   "clean_reviews": 289,
+   "avg_rating": 3.69,
+   "negative_reviews": 56,
+   "first_review_at": "2026-02-02T03:00:00",
+   "last_review_at": "2026-10-08T11:00:00"
+  },
+  "products": [
+   {
+    "product_id": 1,
+    "product_name": "אוזניות אלחוטיות",
+    "category": "אלקטרוניקה",
+    "review_count": 29,
+    "avg_rating": 3.69,
+    "negative_reviews": 6,
+    "paid_orders": 44,
+    "revenue_ils": 19544.0
+   },
+   {
+    "product_id": 2,
+    "product_name": "מקלדת מכנית",
+    "category": "אלקטרוניקה",
+    "review_count": 36,
+    "avg_rating": 3.78,
+    "negative_reviews": 6,
+    "paid_orders": 51,
+    "revenue_ils": 26622.0
+   },
+   {
+    "product_id": 3,
+    "product_name": "בקבוק מים תרמי",
+    "category": "בית",
+    "review_count": 39,
+    "avg_rating": 3.95,
+    "negative_reviews": 7,
+    "paid_orders": 42,
+    "revenue_ils": 5214.2
+   },
+   {
+    "product_id": 4,
+    "product_name": "תיק גב למחשב",
+    "category": "אביזרים",
+    "review_count": 33,
+    "avg_rating": 3.7,
+    "negative_reviews": 7,
+    "paid_orders": 54,
+    "revenue_ils": 16717.0
+   },
+   {
+    "product_id": 5,
+    "product_name": "מטען מהיר USB-C",
+    "category": "אלקטרוניקה",
+    "review_count": 42,
+    "avg_rating": 3.52,
+    "negative_reviews": 8,
+    "paid_orders": 56,
+    "revenue_ils": 8925.0
+   },
+   {
+    "product_id": 6,
+    "product_name": "ספל קרמיקה",
+    "category": "בית",
+    "review_count": 41,
+    "avg_rating": 3.71,
+    "negative_reviews": 9,
+    "paid_orders": 56,
+    "revenue_ils": 3542.9
+   },
+   {
+    "product_id": 7,
+    "product_name": "עכבר ארגונומי",
+    "category": "אלקטרוניקה",
+    "review_count": 32,
+    "avg_rating": 3.81,
+    "negative_reviews": 6,
+    "paid_orders": 47,
+    "revenue_ils": 12338.0
+   },
+   {
+    "product_id": 8,
+    "product_name": "מעמד לטלפון",
+    "category": "אביזרים",
+    "review_count": 37,
+    "avg_rating": 3.38,
+    "negative_reviews": 7,
+    "paid_orders": 52,
+    "revenue_ils": 4307.0
+   }
+  ]
+ },
+ "source_comparison": {
+  "combined_total_allowed": false,
+  "reasons": [
+   "batch revenue = paid orders in ILS; the stream contract has no payment-status field and money is in agorot",
+   "product ids: stream uses [5] which are all present in the batch product table [1, 2, 3, 4, 5, 6, 7, 8] (ids are matchable)",
+   "order_id overlap between sources: 0 (batch range 1002-1599); no shared orders found",
+   "batch order dates 2026-01-01..2026-09-27; stream event time 2026-11-01T10:00:05+00:00..2026-11-01T10:03:15+00:00"
+  ],
+  "instruction": "report batch and stream metrics separately; do not add them"
+ },
+ "data_gaps": {
+  "unsupported_metrics_requested": [],
+  "available_metrics": [
+   "revenue (paid orders, ILS)",
+   "paid orders count",
+   "review count",
+   "average rating",
+   "negative reviews (<=2)",
+   "review texts",
+   "stream order counts/revenue (agorot)",
+   "stream windows, late events, alerts, checkpoint, watermark"
+  ],
+  "note": ""
+ },
+ "snapshot": {
+  "snapshot_id": "snap-20261115T185318-cp16-6cc5d5",
+  "taken_at_utc": "2026-11-15T18:53:18+00:00",
+  "stream_checkpoint": 16,
+  "stream_watermark": "2026-11-01T10:03:15.000+00:00",
+  "tables_used": [
+   "marts.fct_orders",
+   "marts.mart_product_reviews",
+   "staging.stg_reviews"
+  ],
+  "freshness_rule": "values in this package are current as of taken_at_utc; they override older numbers from chat history"
+ }
+}

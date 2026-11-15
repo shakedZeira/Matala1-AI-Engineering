@@ -1,0 +1,22 @@
+﻿
+שלב 1 - dlt: raw.reviews
+  ✅ raw.reviews מכילה 310 שורות (נמצאו 310)
+  ✅ dlt יצר טבלת-בת raw.reviews__tags מהרשימה tags
+  ✅ השדה המקונן product.id נורמל לעמודה product__id
+
+שלב 2 - dbt: staging.stg_reviews
+  ✅ אין כפילויות review_id (289 שורות, 289 ייחודיות)
+  ✅ כל הדירוגים בין 1 ל-5
+  ✅ אין טקסטים ריקים
+  ✅ מספר השורות הוא 289 (נמצאו 289)
+  ✅ נשמרו בדיוק מזהי הביקורות החוקיות מהמקור
+
+שלב 3 - dbt: marts.mart_product_reviews
+  ✅ שורה לכל אחד מ-8 המוצרים (נמצאו 8)
+  ✅ avg_rating נכון לכל מוצר
+  ✅ review_count נכון לכל מוצר
+  ✅ negative_reviews נכון לכל מוצר
+  ✅ revenue תואם ל-fct_orders (רק paid)
+  ✅ paid_orders תואם למספר ההזמנות ששולמו
+
+🎉 14/14 בדיקות עברו

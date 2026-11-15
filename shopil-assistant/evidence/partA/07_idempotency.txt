@@ -1,0 +1,23 @@
+﻿--- BEFORE re-run
+raw.orders 600 | distinct order_id 600 | raw.customers 128 | raw.products 8
+raw.reviews 310 | raw.reviews__tags 284
+fct_orders 549 | stg_reviews 289 | paid revenue 97210.10
+--- re-run 02_dlt_pipeline.py --offline (same source)
+
+1 load package(s) were loaded to destination duckdb and into dataset raw
+Load package 1794768007.000003 is LOADED and contains no failed jobs
+orders written in this run: 0
+--- re-run 04_reviews_pipeline.py (same source)
+Pipeline shop_il_reviews load step finished in 0.92 seconds
+1 load package(s) were loaded to destination duckdb and into dataset raw
+Load package 1794768012.8017433 is LOADED and contains no failed jobs
+  reviews                 310 rows
+  reviews__tags           284 rows
+--- dbt rebuild
+18:40:22  Done. PASS=33 WARN=1 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=34
+--- AFTER re-run
+raw.orders 600 | distinct order_id 600 | raw.customers 128 | raw.products 8
+raw.reviews 310 | raw.reviews__tags 284
+fct_orders 549 | stg_reviews 289 | paid revenue 97210.10
+
+

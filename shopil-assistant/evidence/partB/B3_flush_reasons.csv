@@ -1,0 +1,4 @@
+﻿case,max_batch_size,max_wait_s,interval_s,events,batches,batch_sizes,flush_reasons,sum_sizes,collection_waits,final_partial
+a_max_size,5,5.0,0.0,23,5,5 5 5 5 3,max_size max_size max_size max_size final_drain,23,0.00 0.00 0.00 0.00 0.00,3
+b_max_wait,50,0.12,0.05,9,3,3 2 4,max_wait max_wait max_wait,9,0.12 0.13 0.13,0
+c_partial_no_next_event,5,0.2,1.0,3,3,1 1 1,max_wait max_wait max_wait,3,0.22 0.21 0.20,0

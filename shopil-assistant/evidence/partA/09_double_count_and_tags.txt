@@ -1,0 +1,20 @@
+﻿== Part A extra evidence: double-count protection and tags table
+correct mart revenue (separate aggregation then join) = 97210.10
+NAIVE direct join orders x reviews revenue            = 3354466.70   (inflated x34.5)  <- what the dbt test prevents
+per product (mart vs naive):
+   (1, Decimal('19544.00'), Decimal('566776.00'))
+   (2, Decimal('26622.00'), Decimal('958392.00'))
+   (3, Decimal('5214.20'), Decimal('203353.80'))
+   (4, Decimal('16717.00'), Decimal('551661.00'))
+   (5, Decimal('8925.00'), Decimal('374850.00'))
+   (6, Decimal('3542.90'), Decimal('145258.90'))
+   (7, Decimal('12338.00'), Decimal('394816.00'))
+   (8, Decimal('4307.00'), Decimal('159359.00'))
+
+== reviews__tags (dlt child table of the tags list) / product relation
+raw.reviews rows: 310 | reviews__tags rows: 284
+tag rows whose parent review exists: 284
+orphan tag rows (must be 0): 0
+distinct tags: ['איכות', 'אריזה', 'מחיר', 'משלוח', 'שירות']
+normalized product link: column product__id present, null count: 0 | ids: [1, 2, 3, 4, 5, 6, 7, 8]
+stg_reviews product_ids all exist in stg_products: True
